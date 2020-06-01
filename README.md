@@ -12,11 +12,13 @@ repl.init({
   /* Server db handle */
   /* dbo contains all database tables and views */
   isReady: (dbo) => {
-       dbo.tasks.find(
-          { user_id: 234, title: { $ilike: '%coding%' } },
-          { orderBy: { "last_updated": false } }
-       ).then(tasks => ... );
+    dbo.tasks.find(
+      { user_id: 234, title: { $ilike: '%coding%' } },
+      { orderBy: { "last_updated": false } }
+    ).then(tasks => ... );
   },
+  
+  /* Client authentication */
   onSocketConnect: async ({ socket, dbo }) => {
     const { username, password } = socket.handshake;
     const user = await dbo.users.find({ username, password });
