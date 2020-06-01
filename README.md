@@ -35,28 +35,28 @@ repl.init({
       /* Must return a table/view name, then the allowed actions then action params/rules. 
           Tip: Use true or "*" to allow everything 
       */
-			tasks: {
-				insert: _user.admin || {
-					fields: { user_id: false, id: false },    // Fields allowed to be inserted.   Tip: Use false to exclude field
-					forcedData: { user_id: _user.id }         // Data to include/overwrite on each insert
-				},
-				select: _user.admin || {
-					fields: "name, description, task_duration, last_updated",
-					forcedFilter: { user_id: _user.id },          // Filter to include/overwrite
-					filterFields: "natural_id, last_updated"      // Fields allowed to be searched
-				},
-				update: _user.admin || {
-					fields: "user_typing, user_connected, synced",
-					forcedFilter: { user_id: _user.id },
-					filterFields: "natural_id, last_updated"
-				},
-				delete: _user.admin,
-				sync: {
-					id_fields: "natural_id",
-					synced_field: "last_updated"
-				}
-			},
-      some_public_table: "*"
+	tasks: {
+		insert: _user.admin || {
+			fields: { user_id: false, id: false },    // Fields allowed to be inserted.   Tip: Use false to exclude field
+			forcedData: { user_id: _user.id }         // Data to include/overwrite on each insert
+		},
+		select: _user.admin || {
+			fields: "name, description, task_duration, last_updated",
+			forcedFilter: { user_id: _user.id },          // Filter to include/overwrite
+			filterFields: "natural_id, last_updated"      // Fields allowed to be searched
+		},
+		update: _user.admin || {
+			fields: "user_typing, user_connected, synced",
+			forcedFilter: { user_id: _user.id },
+			filterFields: "natural_id, last_updated"
+		},
+		delete: _user.admin,
+		sync: {
+			id_fields: "natural_id",
+			synced_field: "last_updated"
+		}
+	},
+      	some_public_table: "*"
     }
  });
 ```
