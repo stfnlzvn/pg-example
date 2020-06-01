@@ -10,31 +10,29 @@ repl.init({
 	ioObj: io,        //  socket io
   
   /* Server db handle */
+  /* dbo contains all database tables and views */
   isReady: (dbo) => {
        dbo.tasks.find(
           { user_id: 234, title: { $ilike: '%coding%' } },
           { orderBy: { "last_updated": false } }
        ).then(tasks => ... );
   },
-  
-	onSocketConnect: async ({ socket, dbo }) => {
-    /* dbo contains all database tables and views */
-  
+  onSocketConnect: async ({ socket, dbo }) => {
     const { username, password } = socket.handshake;
     const user = await dbo.users.find({ username, password });
     socket._user = user;
     return user;
   },
-	onSocketDisconnect: ({ socket, dbo }) => { },
+  onSocketDisconnect: ({ socket, dbo }) => { },
   
   /* Client request validation */
 	publish: ({ socket, dbo }) => {
 		const { _user } = socket;
 
+    /* Must return a table/view name, then the allowed actions then action params/rules. 
+        Tip: Use true or "*" to allow everything 
+    */
 		return {
-      /* Must return a table/view name, then the allowed actions then action params/rules. 
-          Tip: Use true or "*" to allow everything 
-      */
       tasks: {
         insert: _user.admin || {
         
@@ -70,8 +68,6 @@ client
 ```javascript
 
 const socket = io({ username: "usr", password: "pwd" });
-
-
 
 psqlWS.init({ 
     socket, 
