@@ -77,7 +77,15 @@ psqlWS.init({
     socket, 
     isReady: (db) => {
       db.tasks.find({}).then(tasks => ... // Only tasks for the user_id);
-      db.tasks.find({ last_updated: { $gt: Date.now() - 24 * 3600 * 1000  })...
+      db.tasks.subscribe(
+      	{ last_updated: { $gt: Date.now() - 24 * 3600 * 1000  },
+	{ limit: 10 },
+	tasks => {
+      		...
+      	}
+      )
+      
+      
     },
     onDisconnect: (err, res) => {
         // location.reload();
