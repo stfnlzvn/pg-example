@@ -35,7 +35,7 @@ repl.init({
         Tip: Use true or "*" to allow everything 
     */
 		return {
-      tasks: {
+      tasks_table: {
         insert: _user.admin || {
         
           // Fields allowed to be inserted.   Tip: Use false to exclude field
